@@ -37,7 +37,7 @@ public static class DapperExperiments
         {
             Active = true,
             Email = "userForOrder@email.com",
-            Name = "UserForOrder",
+            Name = "DapperUser",
         };
         var createdUserId = await userRepo.CreateAsync(user);
 
@@ -45,7 +45,7 @@ public static class DapperExperiments
         var order = new Order
         {
             Created = DateTime.UtcNow,
-            Name = "MyOrder",
+            Name = "DapperOrder",
             Active = true,
             UserId = createdUserId
         };
@@ -53,14 +53,14 @@ public static class DapperExperiments
         var createdOrderId = await orderRepo.CreateAsync(order);
         var savedOrder = await orderRepo.GetAsync(createdOrderId);
 
-        order.Name = "MyNewOrderName";
+        order.Name = "NewDapperOrder";
         await orderRepo.UpdateAsync(createdOrderId, order);
         savedOrder = await orderRepo.GetAsync(createdOrderId);
 
-        await orderRepo.DeleteAsync(createdOrderId);
+        //await orderRepo.DeleteAsync(createdOrderId);
         savedOrder = await orderRepo.GetAsync(createdOrderId);
 
-        await userRepo.DeleteAsync(createdUserId);
+        //await userRepo.DeleteAsync(createdUserId);
     }
 
     public static async Task Join()
