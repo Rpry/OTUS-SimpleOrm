@@ -13,7 +13,7 @@ public class AppDataConnection : DataConnection
     public AppDataConnection()
         : base(
             ProviderName.PostgreSQL95,
-            "Host=localhost;Port=5432;Database=PureDb;UserId=postgres;Password=password",
+            ConfigurationHelper.GetConnectionString("DefaultConnection"),
             CreateMappingSchema())
     {
         TurnTraceSwitchOn();

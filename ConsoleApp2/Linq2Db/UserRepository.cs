@@ -59,9 +59,8 @@ public class UserRepository
             return true;
         }
 
-        var affected = await table.DeleteAsync();
-        //user.Active = false;
-        //var affected = await _dbConnection.UpdateAsync(user);
+        user.Active = false;
+        var affected = await _dbConnection.UpdateAsync(user);
         return affected > 0;
     }
 

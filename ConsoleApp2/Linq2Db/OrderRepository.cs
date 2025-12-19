@@ -13,7 +13,6 @@ namespace SimpleOrmApplication.Linq2Db
             _dbConnection = dbConnection;
         }
 
-        // CREATE
         public async Task<int> CreateAsync(Order order)
         {
             order.Id = await _dbConnection.InsertWithInt32IdentityAsync(order);

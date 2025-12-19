@@ -9,9 +9,9 @@ namespace SimpleOrmApplication.Dapper;
 
 public static class DapperExperiments
 {
-    public static async Task Do1()
+    public static async Task UserCrud()
     {
-        await using var connection = new NpgsqlConnection("Host=localhost;Port=5432;Database=PureDb;UserId=postgres;Password=password");
+        await using var connection = new NpgsqlConnection(ConfigurationHelper.GetConnectionString("DefaultConnection"));
         UserRepository repo = new UserRepository(connection);
         var user = new User
         {
@@ -28,9 +28,9 @@ public static class DapperExperiments
         savedUser = await repo.GetAsync(createdUserId);
     }
 
-    public static async Task Do2()
+    public static async Task OrderCrud()
     {
-        await using var connection = new NpgsqlConnection("Host=localhost;Port=5432;Database=PureDb;UserId=postgres;Password=password");
+        await using var connection = new NpgsqlConnection(ConfigurationHelper.GetConnectionString("DefaultConnection"));
 
         var userRepo = new UserRepository(connection);
         var user = new User
@@ -63,9 +63,9 @@ public static class DapperExperiments
         await userRepo.DeleteAsync(createdUserId);
     }
 
-    public static async Task Do3()
+    public static async Task Join()
     {
-        await using var connection = new NpgsqlConnection("Host=localhost;Port=5432;Database=PureDb;UserId=postgres;Password=password");
+        await using var connection = new NpgsqlConnection(ConfigurationHelper.GetConnectionString("DefaultConnection"));
         
         var userRepo = new UserRepository(connection);
         var user = new User

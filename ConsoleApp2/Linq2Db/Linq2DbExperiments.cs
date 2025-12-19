@@ -7,7 +7,7 @@ namespace SimpleOrmApplication.Linq2Db;
 
 public static class Linq2DbExperiments
 {
-    public static async Task Do1()
+    public static async Task UserCrud()
     {
         await using var connection = new AppDataConnection();
         UserRepository repo = new UserRepository(connection);
@@ -27,23 +27,30 @@ public static class Linq2DbExperiments
         savedUser = await repo.GetAsync(createdUserId);
     }
 
-    public static async Task Do2()
+    public static async Task OrderCrud()
     {
         await using var connection = new AppDataConnection();
+        UserRepository repo = new UserRepository(connection);
+        var user = new User
+        {
+            Active = true,
+            Email = "myEmail",
+            Name = "myName",
+        };
+        var createdUserId = await repo.CreateAsync(user);
         OrderRepository orderRepository = new OrderRepository(connection);
-        var userId = 10001017;
         var order = new Order
         {
             Active = true,
             Created = DateTime.UtcNow,
             Name = "myName",
-            UserId = userId
+            UserId = createdUserId
         };
         var createdOrderId = await orderRepository.CreateAsync(order);
         var createdOrder = await orderRepository.GetAsync(createdOrderId);
 
         UserRepository userRepository = new UserRepository(connection);
-        var user = await userRepository.GetAsync(userId);
+        var userFound = await userRepository.GetAsync(createdUserId);
     }
 
     public static async Task DeferredExecution()
