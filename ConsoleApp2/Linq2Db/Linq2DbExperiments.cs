@@ -11,6 +11,8 @@ public static class Linq2DbExperiments
     {
         await using var connection = new AppDataConnection();
         UserRepository repo = new UserRepository(connection);
+        
+        var savedUser1 = await repo.GetAsync(10001045);
         var user = new User
         {
             Active = true,
@@ -58,5 +60,19 @@ public static class Linq2DbExperiments
         await using var connection = new AppDataConnection();
         UserRepository repo = new UserRepository(connection);
         var savedUser = await repo.GetActiveAsync();
+    }
+
+    public static async Task BulkCreateUsers()
+    {
+        await using var connection = new AppDataConnection();
+        var repo = new UserRepository(connection);
+
+        var users = new System.Collections.Generic.List<User>
+        {
+            new User { Name = "BulkUser1", Email = "bulk1@example.com", Active = true },
+            new User { Name = "BulkUser2", Email = "bulk2@example.com", Active = true }
+        };
+
+        await repo.BulkCreateAsync(users);
     }
 }

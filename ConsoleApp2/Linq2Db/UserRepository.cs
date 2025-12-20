@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using LinqToDB;
+using LinqToDB.Data;
 
 using SimpleOrmApplication.Models;
 
@@ -21,6 +22,11 @@ public class UserRepository
     {
         user.Id = await _dbConnection.InsertWithInt32IdentityAsync(user);
         return user.Id;
+    }
+
+    public async Task BulkCreateAsync(IEnumerable<User> users)
+    {
+        await _dbConnection.BulkCopyAsync(users);
     }
 
     public async Task<User?> GetAsync(int id)
